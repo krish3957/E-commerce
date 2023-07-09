@@ -14,5 +14,6 @@ Node.js (version 18.15.0 or higher)
 MongoDB (version 6.0.6 or higher)
 
 **Clone the Repository**
-git clone https://github.com/username/repository.git
-cd repository
+
+*git clone https://github.com/username/repository.git*
+*cd repository*
