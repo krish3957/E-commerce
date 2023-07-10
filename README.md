@@ -20,7 +20,7 @@ To set up the project locally, follow the instructions below:
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/username/repository.git
+git clone https://github.com/krish3957/E-commerce.git
 cd repository
 ```
 ## API Setup
