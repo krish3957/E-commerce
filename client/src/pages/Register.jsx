@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { publicRequest } from "../requestMethod";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import Navbar from "../components/Navbar"
+import { Navigate } from "react-router-dom";
 const Container = styled.div`
     height: 100vh;
     width: 100vw;
@@ -51,24 +56,65 @@ const Button = styled.button`
 `
 
 const Register = () => {
+
+    const [data, setData] = useState(null);
+    const handleChange = (e) => {
+        setData(prev => {
+            return { ...prev, [e.target.name]: e.target.value }
+        }
+        )
+    }
+
+    const [pass, handlePass] = useState('');
+    const [cpass, handleCoPass] = useState('');
+    const [error, setError] = useState('');
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log(data);
+        console.log(pass);
+        if (pass === cpass) {
+            const res = publicRequest.post('auth/register', {
+                username: data.username,
+                email: data.email,
+                fname: data.fname,
+                lname: data.lname,
+                password: pass,
+                id: data.username
+            }).then((result) => {
+                if (result.status === 201) {
+                    <Navigate to={'/login'} />
+                    alert('Succesful');
+                }
+                })
+                console.log(res);
+        }
+        else {
+            alert('Conform Password is not same as the Password');
+        }
+    }
     return (
+        <>
+        <Navbar/>
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
+                {error && <p>{error}</p>}
                 <Form>
-                    <Input placeholder="First Name"/>
-                    <Input placeholder="Last Name"/>
-                    <Input placeholder="Email"/>
-                    <Input placeholder="username"/>
-                    <Input placeholder="Password"/>
-                    <Input placeholder="Confirm Password"/>
+                    <Input placeholder="First Name" name="fname" onChange={handleChange} required/>
+                    <Input placeholder="Last Name" name="lname" onChange={handleChange} required/>
+                    <Input placeholder="Email" name='email' onChange={handleChange} required/>
+                    <Input placeholder="username" name="username" onChange={handleChange} required/>
+                    <Input placeholder="Password" onChange={(e) => handlePass(e.target.value)} required/>
+                    <Input placeholder="Confirm Password" onChange={(e) => handleCoPass(e.target.value)} required/>
                     <Agreement>By creating an account. I consent to the processing of my personal data in accordance
-                    with the <b>Privacy Policy</b>
+                        with the <b>Privacy Policy</b>
                     </Agreement>
-                    <Button type="submit">CREATE</Button>
+                    <Button onClick={handleClick}>CREATE</Button>
                 </Form>
             </Wrapper>
         </Container>
+        </>
     );
 }
 

@@ -11,7 +11,6 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
-import Payment from "./pages/payment";
 import Sucess from "./pages/Sucess";
 import { useSelector } from "react-redux";
 import Address from "./pages/Address";
@@ -29,7 +28,6 @@ function App() {
         <Route path="/cart" Component={Cart} />
         <Route path="/login" element={User ? <Navigate to={"/"}/> : <Login/> } />
         <Route path="/register" element={User ? <Navigate to={"/"}/> : <Register/> } />
-        <Route path="/payment" Component={Payment}/>
         <Route path="/success" Component={Sucess}/>
         <Route path="/address" Component={Address}/>
         

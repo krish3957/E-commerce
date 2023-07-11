@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+
 const Container = styled.div`
     height: 100vh;
     width: 100vw;
@@ -74,6 +75,7 @@ const Login = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
+        console.log(username,password);
         login(dispatch, { username, password });
     }
 

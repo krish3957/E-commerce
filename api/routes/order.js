@@ -61,7 +61,7 @@ router.get("/find/:id", async (req, res) => {
 router.get("/",verifyTokenAndAdmin , async (req, res) => {
     try{
         Order.find().then((result)=>{
-            result.json(200).json(result);
+            res.status(200).json(result);
         })
     }
     catch(err){
