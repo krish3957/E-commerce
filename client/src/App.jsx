@@ -14,6 +14,7 @@ import {
 import Sucess from "./pages/Sucess";
 import { useSelector } from "react-redux";
 import Address from "./pages/Address";
+import Order from "./pages/Order";
 
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <Route path="/register" element={User ? <Navigate to={"/"}/> : <Register/> } />
         <Route path="/success" Component={Sucess}/>
         <Route path="/address" Component={Address}/>
-        
+        <Route path="/orders" Component={Order} />
       </Routes>
     </Router>
   );

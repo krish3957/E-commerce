@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 import { Add,  Remove } from '@material-ui/icons';
-import { useCallback } from "react";
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { userRequest } from '../requestMethod';
 
 
 const Container = styled.div``
@@ -40,14 +40,6 @@ const Botttom = styled.div`
     margin-top: 20px;
 `
 
-const TopTexts = styled.div`
-
-`
-
-const TopText = styled.span`
-    text-decoration: underline;
-    margin: 0 10px;
-`
 
 const Info = styled.div`
     flex: 3;
@@ -126,34 +118,31 @@ const Hr = styled.div`
     border: 1px solid black;
     opacity: 0.1;
 `
-const Button = styled.button`
-    padding: 5px;
-    font-size: 22px;
-    font-weight: 500;
-    background-color: teal;
-    color: #fff;
-`
 
 const Order = () => {
-    
-  const handlePayment = useCallback(async () => {
+    const [orders,setorders] = useState([]);
+    const user = useSelector(state=>state.user).currentUser;
+    let id;
+    if(user){
+        id = user._id;
+    }
+    useEffect(()=>
+        userRequest("/orders/find/" + id ).then(results => {
+            setorders(results.data);
+        }),[id]);
     return (
         <Container>
             <Navbar />
             <Announcement />
             <Wrapper>
-                <Title>Your Bag</Title>
+                <Title>Your Orders</Title>
                 <Top>
                     <TopButton>CONTINUE SHOPPING</TopButton>
-                    <TopTexts>
-                        <TopText>SHOPPING BAG({cart.quantity})</TopText>
-                        <TopText>YOUR WISHLIST(0)</TopText>
-                    </TopTexts>
-                    <Button onClick={handlePayment}>Checkout Now</Button>                            
                 </Top>
                 <Botttom>
                     <Info>
-                        {cart.products.map((product) => (
+                    {!orders && <h1>No Orders Yet</h1>}
+                        {orders && orders.map((product) => (
                             <Product>
                                 <ProductDetail>
                                     <Image src={product.img} />
@@ -183,4 +172,4 @@ const Order = () => {
     );
 }
 
-export default Cart;
+export default Order;
