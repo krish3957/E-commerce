@@ -5,9 +5,13 @@ import { format } from "timeago.js"
 
 export default function WidgetLg() {
   const [orders,setOrders] = useState([]);
-  userRequest('orders').then((result)=>{
-    setOrders(result.data);
-  });
+
+  useEffect(()=>{
+
+    userRequest('orders').then((result)=>{
+      setOrders(result.data);
+    });
+  },[])
 
 
   const Button = ({ type }) => {

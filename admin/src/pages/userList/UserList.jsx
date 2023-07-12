@@ -2,16 +2,18 @@ import "./userList.css";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userRequest } from "../../requestMethods";
 
 export default function UserList() {
   const [data, setData] = useState([]);
 
-  userRequest.get('user/find').then((result)=>{
-    setData(Object.values(result.data));
-    console.log(data);
-  })
+  useEffect(() => {
+    userRequest.get('user/find').then((result)=>{
+      setData(Object.values(result.data));
+    })
+  }, []);
+
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item._id !== id));

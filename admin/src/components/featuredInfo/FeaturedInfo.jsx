@@ -12,7 +12,6 @@ export default function FeaturedInfo() {
       try {
         const res = await userRequest.get("orders/stats");
         setIncome(res.data);
-        console.log(res.data);
         setPerc((res.data[1].total * 100) / res.data[0].total - 100);
       } catch {}
     };
@@ -24,7 +23,7 @@ export default function FeaturedInfo() {
       <div className="featuredItem">
         <span className="featuredTitle">Revanue</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">${income[1]?.total}</span>
+          <span className="featuredMoney">${income[1]?.total/100}</span>
           <span className="featuredMoneyRate">
             %{Math.floor(perc)}{" "}
             {perc < 0 ? (
