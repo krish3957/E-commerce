@@ -137,7 +137,7 @@ const Navbar = () => {
         {(user && dropdownMenu) && <Dropdown>
           <List>
             <ListItem><Link style={{marginLeft:"-15%"}} to={"/"}>Home</Link></ListItem>
-            <ListItem><Link style={{marginLeft:"-15%"}} to={"/"}>Orders</Link></ListItem>
+            <ListItem><Link style={{marginLeft:"-15%"}} to={"/orders"}>Orders</Link></ListItem>
             <ListItem><Link style={{marginLeft:"-15%"}} onClick={handleLogout}>Logout</Link></ListItem>
           </List>
       </Dropdown>}
