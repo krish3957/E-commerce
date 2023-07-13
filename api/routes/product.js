@@ -23,10 +23,10 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 
     try {
-        const updatedUser = await product.findByIdAndUpdate(req.params.id, {
+        const updatedProduct = await product.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, { new: false });
-        res.json(updatedUser);
+        res.json(updatedProduct);
     } catch (err) {
         res.status(500).json(err);
     }

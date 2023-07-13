@@ -50,6 +50,7 @@ export const updateProduct = async (id, product, dispatch) => {
   try {
     // update
     dispatch(updateProductSuccess({ id, product }));
+    userRequest.put('products/' + id,product);
   } catch (err) {
     dispatch(updateProductFailure());
   }
