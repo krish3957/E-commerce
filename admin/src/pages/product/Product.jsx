@@ -19,10 +19,11 @@ export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
   const [pStats, setPStats] = useState([]);
-
+  
   const product = useSelector((state) =>
-    state.product.products.find((product) => product._id === productId)
+  state.product.products.find((product) => product._id === productId)
   );
+
 
   const MONTHS = useMemo(
     () => [
@@ -61,11 +62,11 @@ export default function Product() {
     };
     getStats();
   }, [productId, MONTHS]);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState(product);
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState([]);
-  const [color, setColor] = useState([]);
-  const [Size, setSize] = useState([]);
+  const [cat, setCat] = useState(product.categories);
+  const [color, setColor] = useState(product.color);
+  const [Size, setSize] = useState(product.size);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -84,7 +85,13 @@ export default function Product() {
   };
   const handleClick = (e) => {
     e.preventDefault();
-    const fileName = new Date().getTime() + file.name;
+    let fileName;
+    if(file ){
+      if(file.name)
+        fileName = new Date().getTime() + file.name
+    }
+    else
+      fileName = product.img;
     console.log(fileName);
     const storage = getStorage(app);
     const storageRef = ref(storage, fileName);
@@ -119,7 +126,7 @@ export default function Product() {
         // Handle successful uploads on complete
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const product = { ...inputs, img: downloadURL, categories: cat, size: Size, color: color };
+          const product = { title:inputs.title,desc:inputs.desc, price:inputs.price, img: file ? downloadURL : fileName, categories: cat, size: Size, color: color };
           updateProduct(productId,product, dispatch);
         });
       }
@@ -166,21 +173,21 @@ export default function Product() {
             <input
               name="title"
               type="text"
-              placeholder={product.title} value={product.title} 
+              placeholder={product.title} defaultValue={product.title} 
               onChange={handleChange}
             />
             <label>Description</label>
             <input
               name="desc"
               type="text"
-              placeholder={product.desc} value={product.desc} 
+              placeholder={product.desc} defaultValue={product.desc} 
               onChange={handleChange}
             />
             <label>Price</label>
             <input
               name="price"
               type="number"
-              placeholder={product.price} value={product.price} 
+              placeholder={product.price} defaultValue={product.price} 
               onChange={handleChange}
             />
             <label>Stock</label>
@@ -191,11 +198,11 @@ export default function Product() {
           </div>
           <div className="productFormRight">
             <label>Colors</label>
-            <input type="text" placeholder={product.color} value={product.color}  onChange={handleColor} />
+            <input type="text" placeholder={product.color} defaultValue={product.color}  onChange={handleColor} />
             <label>Size</label>
-            <input type="text" placeholder={product.size} value={product.size}  onChange={handleSize} />
+            <input type="text" placeholder={product.size} defaultValue={product.size}  onChange={handleSize} />
             <label>Categories</label>
-            <input type="text" placeholder={product.categories} value={product.categories}  onChange={handleCat} />
+            <input type="text" placeholder={product.categories} defaultValue={product.categories}  onChange={handleCat} />
             <div className="productUpload">
               <img src={product.img} alt="" className="productUploadImg" />
               <label for="file">

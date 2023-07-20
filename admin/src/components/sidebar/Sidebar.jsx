@@ -1,4 +1,5 @@
 import "./sidebar.css";
+import {useDispatch} from 'react-redux';
 import {
   LineStyle,
   Timeline,
@@ -14,8 +15,10 @@ import {
   Report,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { loggingOut } from "../../redux/apiCalls";
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -94,6 +97,12 @@ export default function Sidebar() {
             <li className="sidebarListItem">
               <Report className="sidebarIcon" />
               Reports
+            </li>
+            <li className="sidebarListItem" onClick={()=>{
+              loggingOut(dispatch);
+            }}>
+              <Report className="sidebarIcon" />
+              logout
             </li>
           </ul>
         </div>

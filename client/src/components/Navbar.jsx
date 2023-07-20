@@ -66,12 +66,15 @@ const MenuItem = styled.div`
 `
 const Dropdown = styled.div`
   width: 20vw;
-  position: absolute;
+  position: fixed;
   z-index: 3;
   right: 0;
-  top:100px;
-  background-color: red;
+  top:80px;
+  background-color: wheat;
   text-align: center;
+  height: 2
+  00px;
+
 `
 
 const List = styled.ul`
@@ -85,7 +88,6 @@ const Navbar = () => {
   const quantity = useSelector(state => state.cart.quantity);
   const user = useSelector(state => state.user.currentUser);
   const [dropdownMenu,setMenu] = useState(false);
-  console.log(quantity);
 
   const dispatch = useDispatch();
   const handleLogout= () =>{

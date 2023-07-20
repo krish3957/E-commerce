@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { publicRequest } from "../requestMethod";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
 import Navbar from "../components/Navbar"
 import { Navigate } from "react-router-dom";
 const Container = styled.div`
