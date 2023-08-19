@@ -2,8 +2,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import { mobile } from "../responsive";
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
+    ${mobile({ width: "100vw", height: "90vh" })};
     height: 100vh;
     width: 100vw;
     background: linear-gradient(rgba(255,255,255,0.5),rgba(0,0,0,0.2)) ,url('https://wallpapers.com/images/high/mens-fashion-photography-4p2izmj9ba6dkycl.webp') center no-repeat;
@@ -14,6 +17,7 @@ const Container = styled.div`
     `
 
 const Wrapper = styled.div`
+    ${mobile({ width: "60vw", height: "auto" })};
     width: 25%;
     padding: 20px;    
     background-color: white;
@@ -75,25 +79,25 @@ const Login = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(username,password);
         login(dispatch, { username, password });
     }
 
     return (
-        <Container>
-            <Wrapper>
-                <Title>CREATE AN ACCOUNT</Title>
-                <Form>
-                    <Input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
-                    <Input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-                    <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
-                    {error && <Error >Something Went Wrong!!!</Error>}
-                </Form>
-                
-                <Link>FORGOT PASSWORD?</Link>
-                <Link>CREATE AN ACCOUNT</Link>
-            </Wrapper>
-        </Container>
+        <div>
+        <Navbar/>
+            <Container>
+                <Wrapper>
+                    <Title>SIGN IN</Title>
+                    <Form>
+                        <Input placeholder="username" onChange={(e) => setUsername(e.target.value)} />
+                        <Input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <Button onClick={handleClick} disabled={isFetching}>LOGIN</Button>
+                        {error && <Error >Something Went Wrong!!!</Error>}
+                    </Form>
+                    <Link href="/register">CREATE AN ACCOUNT</Link>
+                </Wrapper>
+            </Container>
+        </div>
     );
 }
 

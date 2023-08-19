@@ -3,24 +3,10 @@ export  const SliderItems = [
     {
         id:1,
         img: require('./Images/TK2L6939-removebg-preview.png'),
-        title:"NEW ARRIVALS",
-        desc:"DON'T COMPROMISE ON STYLE.30% OFF ON THE NEW ARRIVALS",
+        title:"Welcome to SEV7N",
+        desc:"Discover Your Perfect Graphic T-shirts Here",
         bg:"ffddef"   
     },
-    {
-        id:2,
-        img: require('./Images/TK2L7009-removebg-preview.png'),
-        title: "NEW ARRIVALS",
-        desc: "DON'T COMPROMISE ON STYLE.30% OFF ON THE NEW ARRIVALS",
-        bg: "ffede4"
-    },
-    {
-        id:3,
-        img: require('./Images/TK2L7175-removebg-preview.png'),
-        title: "SUMMER SALE",
-        desc: "DON'T COMPROMISE ON STYLE.30% OFF ON THE NEW ARRIVALS",
-        bg: "ffdfe4"
-    }
 ]
 
 export const categories = [

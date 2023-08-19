@@ -1,61 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Announcement from '../components/Announcement';
-import styled from 'styled-components';
-import Footer from '../components/Footer';
-import { userRequest } from '../requestMethod';
+import React from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { mobile } from '../responsive';
-
-
+import { styled } from 'styled-components';
+import { userRequest } from '../../requestMethods';
+import { useEffect } from 'react';
+import dateFormat from 'dateformat';
 const Container = styled.div`
-    ${mobile({ width: "100vw"})};
+    padding:2vw;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
 `
 
-const Wrapper = styled.div`
-    padding: 20px;
+const Row = styled.div`
+    display: flex;
 
 `
 
-const Title = styled.h1`
-    font-weight: 300;
+const Date = styled.p`
+     width: 8vw;
     text-align: center;
+    font-weight:${props => props.type === 'title' ? 700 : 500} ;
 `
-
-const Top = styled.div`
-    display: flex;
-    ${mobile({ flexDirection: "Column"})};
-    justify-content: space-between;
-    align-items: center;
-`
-
-const TopButton = styled.button`
-    padding: 15px;
-    font-weight: 600;
-    border: ${props => props.type === "filled" && "none"};
-    background-color: ${props => props.type === "filled" ? "black" : "white"};
-    color: ${props => props.type === "filled" && "white"};
-`
-
-const Botttom = styled.div`
-    display: flex;
-    ${mobile({ flexDirection: "Column"})};
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 20px;
-`
-
-
-const Info = styled.div`
-    flex: 3;
-    display: flex;
-    flex-direction: column ;
-`
-
-
-
 const Product = styled.div`
-    ${mobile({ flexDirection: "Column"})};
+    
     display: flex;
     margin: 20px 0;
 `
@@ -63,7 +31,7 @@ const Product = styled.div`
 const ProductDetail = styled.div`
     flex: 1.5;
     display: flex;
-    ${mobile({ flexDirection: "Column"})};
+    
 `
 
 const PriceDetail = styled.div`
@@ -82,13 +50,13 @@ const ProductColor = styled.div`
 `
 
 const Image = styled.img`
-    ${mobile({ width: "90vw",height:"80vh"})};
+    
     width: 200px;
     height: 200px;
 `
 
 const Details = styled.div`
-    ${mobile({ padding: "15px 0"})};
+    
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -130,40 +98,58 @@ const Hr = styled.div`
 `
 
 
-const Order = () => {
-    const [orders, setorders] = useState([]);
-    const location = useLocation()
+const OrderUpdate = () => {
+    const location = useLocation();
     const id = location.pathname.split('/')[2];
+    const [order, setOrder] = useState({});
+    const [user,setUser] = useState();
+
+    console.log(id);
     useEffect(() => {
-        const getOrders = () => {
-            userRequest.get("/orders/find/" + id).then(results => {
-                results.data.map((item) =>
-                    item.products.map((prod) =>
-                        setorders((prev) => [...prev, prod])
-                    )
-
-                )
-            })
-            
-
-        }
-        getOrders();
-    }
-        , [id]);
+        userRequest.get(`/orders/${id}`).then(result => {
+            setOrder(result.data);
+        
+        });
+    }, [id]);
+    useEffect(() => {
+        const userId = order.userId;
+        userRequest.get(`/user/${userId}`).then(result => {
+            setUser(result.data);
+        });
+    }, [order]);
+    
+    console.log(order);
+    console.log(user);
     return (
         <Container>
-            <Navbar />
-            <Announcement />
-            <Wrapper>
-                <Title>Your Orders</Title>
-                <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
-                </Top>
-                <Botttom>
-                    <Info>
-                        {!orders && <h1>No Orders Yet</h1>}
-                        {orders && orders.map((product,index) => (
-                            <Product key={index}>
+            <Row>
+                <strong>Order Id:</strong>
+                <p>{order.orderId}</p>
+            </Row>
+            <Row>
+                <strong>Date</strong>
+                <Date>{dateFormat(order.createdAt,'dd/mm/yyyy')}</Date>
+            </Row>
+            <Row>
+                <strong>User Id:</strong>
+                <p>{order.userId}</p>
+            </Row>
+            <Row>
+                <strong>User:</strong>
+                { user && <p>{user.fname}</p>}
+                { user && <p>{user.lname}</p>}
+            </Row>
+            <Row>
+                <strong>User Email:</strong>
+                {user && <p>{user.email }</p>}
+            </Row>
+            <Row>
+            <strong>Amount:</strong>
+                <p>{order.amount}</p>
+            </Row>
+            <Row>
+                {order.products && order.products.map((product,index) =>(
+                    <Product key={index}>
                                 <ProductDetail>
                                     <Image src={product.img} />
                                     <Details>
@@ -183,13 +169,20 @@ const Order = () => {
                                 </PriceDetail>
                                 <Hr />
                             </Product>
-                        ))}
-                    </Info>
-                </Botttom>
-            </Wrapper>
-            <Footer />
+                ))}
+            </Row>
+            <Row>
+                <strong>Address</strong>
+            </Row>
+            {order && order.address &&<Row>
+                <p style={{marginRight:"5px"}}>{order.address.address_1},</p>
+                <p style={{marginRight:"5px"}}>{order.address.address_2},</p>
+                <p style={{marginRight:"5px"}}>{order.address.City},</p>
+                <p style={{marginRight:"5px"}}>{order.address.State},</p>
+                <p style={{marginRight:"5px"}}>{order.address.ZipCode}</p>
+            </Row>}
         </Container>
     );
 }
 
-export default Order;
+export default OrderUpdate;

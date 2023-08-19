@@ -5,7 +5,7 @@ import { mobile } from '../responsive';
 const Container = styled.div`
     height: 30px;
     background-color:red;
-    ${mobile({width:""})}
+    ${mobile({ width: "100vw" })};
     color: white;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@ const Container = styled.div`
 const Announcement = () => {
     return (
         <Container>
-            Free Delivery for order above Rs. 4999
+            Free Delivery for all the orders
         </Container>
     );
 }

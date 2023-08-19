@@ -1,16 +1,19 @@
 import './Address.css';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useRazorpay from "react-razorpay";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { useSelector } from 'react-redux';
+import { mobile } from '../responsive';
 const Container = styled.div`
+    ${mobile({ width: "100vw",padding:0})};
 `
 
 const Wrapper = styled.div`
-padding: 10vh 15vw 0 15vw;
+    ${mobile({ width: "100vw",padding:0})};
+    padding: 10vh 15vw 0 15vw;
     width: 70vw;
     height: 80vh;
 
@@ -23,6 +26,7 @@ const Form = styled.form`
 `
 
 const Row = styled.div`
+    ${mobile({ width: "80vw"})};
     display: flex;
     width: 40vw;
     margin: 5vh;
@@ -30,6 +34,8 @@ const Row = styled.div`
 `
 
 const Button = styled.button`
+    ${mobile({ width: "70vw"})};
+
     width:250px;
     padding:10px;
     background-color: black;
@@ -39,9 +45,11 @@ const Button = styled.button`
 `
 
 const Buttons = styled.div`
+    ${mobile({ width: "80vw",padding:0})};
     width: 99%;
     margin: 10px;
     display: flex;
+    
     justify-content: space-between;
 `
 
@@ -58,13 +66,11 @@ const Address = () => {
     const [country, saveCountry] = useState('');
     const [zipcode, saveZipCode] = useState('');
 
-
     const cart = useSelector(state => state.cart);
     const Razorpay = useRazorpay();
 
-    const navigate = useNavigate();
+    useEffect(()=>{
 
-    const handlePayment = useCallback(async () => {
         const handleAddress = () => {
             saveAddress({
                 address_1: add1,
@@ -76,7 +82,11 @@ const Address = () => {
             });
         }
         handleAddress();
-        var order = axios.post('http://localhost:5000/api/checkout/payment', {
+    },[add1,add2,city,state,country,zipcode])
+    const navigate = useNavigate();
+    const handlePayment = useCallback(async () => {
+        
+        var order = axios.post('https://e-commerce-api-psi.vercel.app/api/checkout/payment', {
             amount: cart.total * 100
 
         })
@@ -84,7 +94,6 @@ const Address = () => {
 
         order.then(order1 => {
             order = order1.data;
-            console.log(order.id)
         })
 
 
@@ -97,8 +106,8 @@ const Address = () => {
             image: "https://example.com/your_logo",
             order_id: order.id,
             handler: function () {
-
                 navigate('/success',{ state: { address: address, orderId: order.id }});
+                window.location.reload();
             },
             notes: {
                 address: address
@@ -116,7 +125,7 @@ const Address = () => {
         })
 
 
-    }, [cart, Razorpay, address, navigate,add1,add2,city,state,country,zipcode])
+    }, [cart, Razorpay, address, navigate])
 
 
     return (
@@ -127,14 +136,14 @@ const Address = () => {
                     <Row>
                         <div className="inputbox">
                             <span>Address Line 1</span>
-                            <input required="required" name='address_1' type="text" onChange={(e) => saveAdd1(e.target.value)} style={{ width: '500px' }} />
+                            <input required="required" name='address_1' type="text" onChange={(e) => saveAdd1(e.target.value)} style={{ maxWidth: '500px' }} />
                             <i />
                         </div>
                     </Row>
                     <Row>
                         <div className="inputbox">
                             <span>Address Line 2</span>
-                            <input required="required" name='address_2' type="text" onChange={(e) => saveAdd2(e.target.value)} style={{ width: '500px' }} />
+                            <input required="required" name='address_2' type="text" onChange={(e) => saveAdd2(e.target.value)} style={{ maxWidth: '500px' }} />
                             <i />
                         </div>
                     </Row>
@@ -145,20 +154,20 @@ const Address = () => {
                             <i />
                         </div>
                         <div className="inputbox">
-                            <span>City</span>
+                            <span>State</span>
                             <input required="required" name='state' onChange={(e) => saveState(e.target.value)} />
                             <i />
                         </div>
                     </Row>
                     <Row>
                         <div className="inputbox">
-                            <span>Address Line 1</span>
+                            <span>Country</span>
                             <input required="required" name='country' onChange={(e) => saveCountry(e.target.value)} />
                             <i />
                         </div>
                         <div className="inputbox">
                             <span>ZipCode</span>
-                            <input required="required" name='country' onChange={(e) => {
+                            <input required="required" name='zipcode' onChange={(e) => {
                                 saveZipCode(e.target.value);
                                 if (zipcode.length > 6) {
                                     alert('enter a valid ZipCode');

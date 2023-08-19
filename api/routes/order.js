@@ -47,8 +47,18 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 //Here id is the User Id not the Order Id
 router.get("/find/:id", async (req, res) => {
     try {
-        Order.findOne({userId:req.params.id}).then((result) => {
+        Order.find({userId:req.params.id}).then((result) => {
+            res.status(200).json(result);
+        })
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
+// Get Single Order
+router.get("/:id", async (req, res) => {
+    try {
+        const r = await Order.findById(req.params.id).then((result) => {
             res.status(200).json(result);
         })
     } catch (err) {

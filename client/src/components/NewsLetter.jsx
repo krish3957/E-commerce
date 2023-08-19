@@ -4,20 +4,23 @@ import styled from 'styled-components';
 import { mobile } from '../responsive';
 
 const Container =styled.div`
+    ${mobile({ width: "94vw",padding:"0 3vw" })};
     display: flex;
     flex-direction: column;
     align-items: center;
-    ${mobile({width:"100vh"})};
 `
 const Title =styled.h1`
+    ${mobile({ fontSize:"60px",width: "94vw",padding:"0 3vw",textAlign:"center" })};
     font-size: 70px;
 `
 const Desc =styled.div`
+${mobile({ width: "94vw",padding:"0 3vw",textAlign:"center" })};
 font-size: 24px;
 margin-bottom: 20px;
 `
 
 const InputContainer = styled.div`
+${mobile({ width: "94vw",padding:"0 3vw",textAlign:"center" })};
 margin-bottom: 40px;
 display: flex;
 width: 50%;

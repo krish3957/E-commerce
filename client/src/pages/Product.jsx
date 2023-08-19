@@ -8,28 +8,35 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
     width: 100%;
+    ${mobile({ width: "100vw",height:"auto"})};
 `
 const Wrapper = styled.div`
+    ${mobile({ width: "100vw",height:"auto",padding:0})};
     padding: 40px;
     display: flex;
+    ${mobile({ flexDirection:"Column"})};
     height: 100vh;
 
 `
 const ImageContainer = styled.div`
+    ${mobile({ width: "100vw",height:"auto",padding:"15px 0"})};
     display: flex;
     justify-content: center;
     flex: 1;
 `
 const Image = styled.img`
+    ${mobile({ width: "90%"})};
     width: 80%;
     height: 100%;
 `
 const InfoContainer = styled.div`
     flex: 1;
+    ${mobile({ padding: "0 15px"})};   
 `
 const Title = styled.h1`
     font-size: 45px;
@@ -53,6 +60,7 @@ const Desc = styled.div`
 `
 
 const FilterContainer = styled.div`
+    ${mobile({ width: "90vw"})};
     width: 500px;
     margin: 40px 0;
     display: flex;
@@ -119,6 +127,7 @@ const AmountContainer = styled.div`
 `
 
 const Button = styled.button`
+    ${mobile({ marginTop:"1vh",padding: "2vh 5vw"})};
     padding: 15px;
     border: 2px solid teal;
     border-radius: 5px;
@@ -133,7 +142,6 @@ const Product = () => {
     const [quantity, setQuantity] = useState(1);
     const [size, setSize] = useState(null);
     const [color, setColor] = useState(null);
-    const cart = useSelector(state=>state.cart);
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
@@ -144,11 +152,10 @@ const Product = () => {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/products/find/" + id);
+                const res = await axios.get("https://e-commerce-api-psi.vercel.app/api/products/find/" + id);
                 setProduct(res.data);
             }
             catch (err) {
-                console.log(err);
             }
         }
         getProduct(); 
@@ -171,8 +178,7 @@ const Product = () => {
             alert('Please Select A Color');
         }
         else{
-            dispatch(addProduct({ ...product, size,color,quantity}));
-            console.log(cart);
+            dispatch(addProduct({ ...product, size,color,quantity}));            
         }
     }
 
@@ -194,8 +200,8 @@ const Product = () => {
                         <Filter>
                             <FilterTitle>Color:</FilterTitle>
                             <Colors>
-                                {product.color?.map((c) => (
-                                    <FilterColors color={c} onClick={() => setColor(c)} />
+                                {product.color?.map((c,index) => (
+                                    <FilterColors key={index} color={c} onClick={() => setColor(c)} />
                                 ))}
                             </Colors>
                         </Filter>
@@ -203,8 +209,8 @@ const Product = () => {
                             <FilterTitle>Size:</FilterTitle>
                             <Select defaultValue={"Size"} onChange={(e) => setSize(e.target.value)}>
                                 <Option disabled>Size</Option>
-                                {product.size?.map((s) => (
-                                    <Option>{s}</Option>
+                                {product.size?.map((s,index) => (
+                                    <Option key={index}>{s}</Option>
                                 ))}
                             </Select>
                         </Filter>
@@ -215,8 +221,8 @@ const Product = () => {
                             <Amount>{quantity}</Amount>
                             <Add onClick={() => handleQuatity("asc")} />
                         </AmountContainer>
-                        <Button onClick={handleClick}>ADD TO CART</Button>
                     </AddContainer>
+                        <Button onClick={handleClick}>ADD TO CART</Button>
                 </InfoContainer>
             </Wrapper>
             <NewsLetter />

@@ -1,5 +1,5 @@
 import "./sidebar.css";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   LineStyle,
   Timeline,
@@ -26,10 +26,10 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
@@ -56,10 +56,12 @@ export default function Sidebar() {
                 Products
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Transactions
-            </li>
+            <Link to="/orders" className="link">
+              <li className="sidebarListItem">
+                <AttachMoney className="sidebarIcon" />
+                Transactions
+              </li>
+            </Link>
             <li className="sidebarListItem">
               <BarChart className="sidebarIcon" />
               Reports
@@ -98,7 +100,7 @@ export default function Sidebar() {
               <Report className="sidebarIcon" />
               Reports
             </li>
-            <li className="sidebarListItem" onClick={()=>{
+            <li className="sidebarListItem" onClick={() => {
               loggingOut(dispatch);
             }}>
               <Report className="sidebarIcon" />

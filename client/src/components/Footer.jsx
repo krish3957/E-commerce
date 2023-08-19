@@ -1,8 +1,10 @@
-import { Email, Facebook, Instagram, Phone, Pinterest, Place } from '@material-ui/icons';
+import { Email,  Instagram, Phone, Place } from '@material-ui/icons';
 import React from 'react';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
+    ${mobile({ width: "90vw",padding:"5vw",flexDirection:"Column",height:"auto"})};
     display: flex;
     background-color: #ffdef2;
     height: 200px;
@@ -66,6 +68,12 @@ const ContactItem = styled.div`
     font-size: 18px;
     margin-left: 10px;
 `
+const Link = styled.a`
+    color: black;
+    font-size: 18px;
+    font-weight: 400;
+    text-decoration: none;
+`
 
 function Footer() {
     return (
@@ -75,28 +83,23 @@ function Footer() {
                 <Desc>Thank you for visiting our website! We strive to provide you with the best experience and information possible.</Desc>
                 <SocialIcons>
                     <Icon><Instagram /></Icon>
-                    <Icon><Facebook /></Icon>
-                    <Icon><Pinterest /></Icon>
                 </SocialIcons>
             </Left>
             <Center>
                 <ListTitle>Important Links</ListTitle>
                 <List>
-                    <Items>Home</Items>
-                    <Items>Men Section</Items>
-                    <Items>Women Section</Items>
-                    <Items>Delivery Policy</Items>
-                    <Items>Privacy Policy</Items>
-                    <Items>Terms and Condition</Items>
-                    <Items>Contact Us</Items>
-                    <Items>Refund Policy</Items>
+                    <Items><Link href='/'>Home</Link></Items>
+                    <Items><Link href='/policies/shipping-policy'>Shipping Policy</Link></Items>
+                    <Items><Link href='/policies/privacy-policy'>Privacy Policy</Link></Items>
+                    <Items><Link href='/policies/terms-of-service'>Terms and Condition</Link></Items>
+                    <Items><Link href='/contact'>Contact Us</Link></Items>
                 </List>
             </Center>
             <Right>
                 <Title>Contact Us</Title>
                 <ContactList>
                     <Place />
-                    <ContactItem>Surat Gujrat</ContactItem>
+                    <ContactItem>Bhuj, Kutch,Gujrat</ContactItem>
                 </ContactList>
                 <ContactList>
                     <Phone />
@@ -104,7 +107,7 @@ function Footer() {
                 </ContactList>
                 <ContactList>
                     <Email />
-                    <ContactItem>shopdropgo@gmail.com</ContactItem>
+                    <ContactItem>sev7n.in@gmail.com</ContactItem>
                 </ContactList>
             </Right>
         </Container>

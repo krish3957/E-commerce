@@ -5,12 +5,12 @@ import { mobile } from '../responsive';
 import axios from 'axios';
 
 const Container = styled.div`
+    ${mobile({ width: "94vw",padding:"0" ,marging:0})};
     display: flex;
     width: calc(100vw-40px);
     justify-content: space-between;
     padding: 20px;
     flex-wrap: wrap;
-    ${mobile({ width: "100vh" })};
 
 `
 const Products = ({ cat, filters, sort }) => {
@@ -20,12 +20,12 @@ const Products = ({ cat, filters, sort }) => {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get(cat ? `http://localhost:5000/api/products?category=${cat}` : "http://localhost:5000/api/products/");
+                const res = await axios.get(cat ? `https://e-commerce-api-psi.vercel.app/api/products?category=${cat}` : "https://e-commerce-api-psi.vercel.app/api/products/");
                 setProducts(res.data);
 
             }
             catch (err) {
-                // console.log((err));
+
             }
         }
         getProducts();
@@ -57,10 +57,10 @@ const Products = ({ cat, filters, sort }) => {
 
     return (
         <Container>
-            {cat ? filterProducts.map((item) => (
-                <Product item={item} />
-            )):products.map((item) => (
-                <Product item={item} />
+            {cat ? filterProducts.map((item,index) => (
+                <Product key={index} item={item} />
+            )):products.map((item,index) => (
+                <Product key={index} item={item} />
             ))
             }
         </Container>

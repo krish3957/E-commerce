@@ -85,6 +85,7 @@ export default function NewProduct() {
           <input
             type="file"
             id="file"
+            accept="image/x-png,image/jpeg"
             onChange={(e) => setFile(e.target.files[0])}
           />
         </div>

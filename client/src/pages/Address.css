@@ -53,3 +53,11 @@
   .inputbox input:focus ~i {
     height: 44px;
   }
+  @media only screen and (max-width: 42px) {
+    .inputbox{
+      width: 40vw;
+    }
+    .inputbox input{
+      width: 40vw;
+    }
+  } 

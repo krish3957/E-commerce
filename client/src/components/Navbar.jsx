@@ -1,5 +1,5 @@
 import { Badge } from '@material-ui/core'
-import { HorizontalSplit, Search, ShoppingCartOutlined } from '@material-ui/icons'
+import { HorizontalSplit, ShoppingCartOutlined } from '@material-ui/icons'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { mobile } from '../responsive'
@@ -8,12 +8,13 @@ import { Link } from 'react-router-dom';
 import { loggingOut } from '../redux/apiCalls'
 
 const Container = styled.div`
+  ${mobile({ width: "100vw" })};
   height:60px;
   margin-top: -10px;
   padding-bottom:10px;
-  ${mobile({ width: "100vh" })};
 `;
 const Wrapper = styled.div`
+  ${mobile({ width: "95vw" ,padding:0 })};
   padding : 0 20px;
   display:flex;
   justify-content : space-between;
@@ -21,6 +22,8 @@ const Wrapper = styled.div`
 `
 
 const Left = styled.div`
+  ${mobile({ display: "none" })};
+
   flex:1;
   display:flex;
   align-items:center;
@@ -38,25 +41,9 @@ justify-content: flex-end;
 `;
 
 
-const Language = styled.span`
-  font-size : 14px;
-  cursor: pointer;
-`
-
-const Input = styled.input`
-  border:none; 
-  ${mobile({ width: "50px" })}; 
-`;
-const SearchContainer = styled.div`
-  border: 1px solid lightgrey;
-  display:flex;
-  align-items:center;
-  margin-left:25px;
-  padding:5px;
-  
-`
 const Logo = styled.h1`
   font-weight: bold;
+  ${mobile({ paddingLeft:0 })};
 `
 
 const MenuItem = styled.div`
@@ -65,6 +52,7 @@ const MenuItem = styled.div`
   margin-left:30px;
 `
 const Dropdown = styled.div`
+  ${mobile({ width: "100vw" })};
   width: 20vw;
   position: fixed;
   z-index: 3;
@@ -98,11 +86,11 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <Language>English</Language>
+          {/* <Language>English</Language>
           <SearchContainer>
             <Input />
             <Search style={{ color: "grey", fontSize: 16 }} />
-          </SearchContainer>
+          </SearchContainer> */}
         </Left>
         <Center>
           <Link style={{ width: "100%", display: 'flex', justifyContent: 'center', textDecoration: 'none', color: 'black' }} to={"/"}><Logo>SEV7N</Logo></Link>
@@ -139,7 +127,7 @@ const Navbar = () => {
         {(user && dropdownMenu) && <Dropdown>
           <List>
             <ListItem><Link style={{marginLeft:"-15%"}} to={"/"}>Home</Link></ListItem>
-            <ListItem><Link style={{marginLeft:"-15%"}} to={"/orders"}>Orders</Link></ListItem>
+            <ListItem><Link style={{marginLeft:"-15%"}} to={"/orders/" + user._id}>Orders</Link></ListItem>
             <ListItem><Link style={{marginLeft:"-15%"}} onClick={handleLogout}>Logout</Link></ListItem>
           </List>
       </Dropdown>}

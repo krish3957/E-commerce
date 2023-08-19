@@ -5,13 +5,17 @@ import styled from 'styled-components';
 import Footer from '../components/Footer';
 import {  useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { mobile } from '../responsive';
 
 
 
-const Container = styled.div``
+const Container = styled.div`
+    ${mobile({ width: "100vw"})};
+`
 
 const Wrapper = styled.div`
     padding: 20px;
+
 `
 
 const Title = styled.h1`
@@ -21,6 +25,7 @@ const Title = styled.h1`
 
 const Top = styled.div`
     display: flex;
+    ${mobile({ flexDirection: "Column"})};
     justify-content: space-between;
     align-items: center;
 `
@@ -35,6 +40,7 @@ const TopButton = styled.button`
 
 const Botttom = styled.div`
     display: flex;
+    ${mobile({ flexDirection: "Column"})};
     width: 100%;
     justify-content: space-between;
     margin-top: 20px;
@@ -58,6 +64,7 @@ const Info = styled.div`
 
 
 const Product = styled.div`
+    ${mobile({ flexDirection: "Column"})};
     display: flex;
     margin: 20px 0;
 `
@@ -65,11 +72,12 @@ const Product = styled.div`
 const ProductDetail = styled.div`
     flex: 1.5;
     display: flex;
-    
+    ${mobile({ flexDirection: "Column"})};
 `
 
 const PriceDetail = styled.div`
     flex: 1;
+
 `
 
 const ProductName = styled.div``
@@ -83,11 +91,13 @@ const ProductColor = styled.div`
 `
 
 const Image = styled.img`
+    ${mobile({ width: "90vw",height:"80vh"})};
     width: 200px;
     height: 200px;
 `
 
 const Details = styled.div`
+    ${mobile({ padding: "15px 0"})};
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -107,6 +117,7 @@ const ProductAmountContainer = styled.div`
 `
 
 const ProductAmount = styled.div`
+    margin-left: 10px;
     width: 33%;
     height: 30px;
     display: flex;
@@ -153,6 +164,7 @@ const SummaryItemText = styled.div``
 const SummaryItemPrice = styled.span``
 
 const Button = styled.button`
+    ${mobile({ width: "60vw"})};
     padding: 5px;
     font-size: 22px;
     font-weight: 500;
@@ -171,10 +183,9 @@ const Cart = () => {
             <Wrapper>
                 <Title>Your Bag</Title>
                 <Top>
-                    <TopButton>CONTINUE SHOPPING</TopButton>
+                    <Link to={'/products'}><TopButton>CONTINUE SHOPPING</TopButton></Link>
                     <TopTexts>
                         <TopText>SHOPPING BAG({cart.quantity})</TopText>
-                        <TopText>YOUR WISHLIST(0)</TopText>
                     </TopTexts>
                     <Link to={'/address'}><Button>Checkout Now</Button></Link>
                 </Top>
@@ -193,7 +204,7 @@ const Cart = () => {
                                 </ProductDetail>
                                 <PriceDetail>
                                     <ProductAmountContainer>
-                                        <ProductAmount>{product.quantity}</ProductAmount>
+                                        <ProductAmount>Qty:{product.quantity}</ProductAmount>
                                     </ProductAmountContainer>
                                     <ProductPrice>₹ {product.price}</ProductPrice>
                                 </PriceDetail>

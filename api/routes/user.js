@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const user = require('../models/User');
 const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken');
 
@@ -69,7 +70,22 @@ router.get("/find", verifyTokenAndAdmin, async (req, res) => {
     }
 });
 
-module.exports = router;
+router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+    try{
+        if(mongoose.Types.ObjectId.isValid(req.params.id)){
+            user.findById(req.params.id).then((result) => {
+                const { password, ...others } = result
+
+                res.status(200).json(others);
+            });
+        }
+        } 
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
+
+
 
 //User Stats
 
@@ -98,3 +114,5 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
         res.status(500).json(err);
     }
 })
+
+module.exports = router;

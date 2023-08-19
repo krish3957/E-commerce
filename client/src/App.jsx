@@ -15,6 +15,10 @@ import Sucess from "./pages/Sucess";
 import { useSelector } from "react-redux";
 import Address from "./pages/Address";
 import Order from "./pages/Order";
+import TermsOfServices from "./pages/Terms_Of_Services";
+import Contact from "./pages/Contact";
+import Shipping from "./pages/Shipping";
+import Privacy from "./pages/Privacy";
 
 
 function App() {
@@ -31,7 +35,11 @@ function App() {
         <Route path="/register" element={User ? <Navigate to={"/"}/> : <Register/> } />
         <Route path="/success" Component={Sucess}/>
         <Route path="/address" Component={Address}/>
-        <Route path="/orders" Component={Order} />
+        <Route path="/orders/:id" Component={Order} />
+        <Route path="/policies/terms-of-service" Component={TermsOfServices} />
+        <Route path="/contact" Component={Contact} />
+        <Route path="/policies/shipping-policy" Component={Shipping} />
+        <Route path="/policies/privacy-policy" Component={Privacy} />
       </Routes>
     </Router>
   );

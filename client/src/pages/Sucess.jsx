@@ -25,14 +25,16 @@ const Success = () => {
             productId: item._id,
             quantity: item.quantity,
             size:item.size,
-            color:item.color
+            color:item.color,
+            img:item.img,
+            price:item.price
           })),
           amount: cart.total,
           address: data,
-        });
-        console.log(res);
+        });        
       } catch {}
     };
+
     data && createOrder();
   }, [cart, data, currentUser,orderId]);
 
@@ -51,7 +53,6 @@ const Success = () => {
         : `Successfull. Your order is being prepared...`}
       <button style={{ padding: 10, marginTop: 20 }} onClick={()=>{
         navigate('/');
-        console.log(cart);
         dispatch(clearCart());
         }}>Go to Homepage</button>
     </div>

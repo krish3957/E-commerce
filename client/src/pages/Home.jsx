@@ -12,7 +12,7 @@ function Home() {
         <Announcement/>
         <Navbar/>
         <Slider/>
-        <Categories/>
+        {/* <Categories/> */}
         <Products/>
         <NewsLetter/>
         <Footer/>

@@ -2,8 +2,10 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@m
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { mobile } from '../responsive';
 
 const Container = styled.div`
+    ${mobile({ width: "80vw",maxWidth:"90vw" ,margin:"15px 0"})};
     flex:1;
     margin: 15px;
     position: relative;
@@ -17,6 +19,7 @@ const Container = styled.div`
 `
 
 const Circle = styled.div`
+
     width: 200px;
     height: 200px;
     border-radius: 50%;
@@ -25,11 +28,13 @@ const Circle = styled.div`
     display: flex;
 `
 const Image = styled.img`
+    ${mobile({ width: "90%" })};
     height: 100%;
     width: 100%;
     z-index: 2;
 `
 const Info = styled.div`
+    ${mobile({ width: "90vw",maxWidth:"90vw" })};
     opacity: 0;
     width: 100%;
     height: 100%;
